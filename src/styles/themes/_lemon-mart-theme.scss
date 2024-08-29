@@ -8,16 +8,27 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 // Define the theme object.
-$lemon-mart-f-theme: mat.define-theme(
+$lemon-mart-primary: mat.m2-define-palette(mat.$m2-green-palette, 800);
+$lemon-mart-accent: mat.m2-define-palette(mat.$m2-lime-palette, A400);
+// $lemon-mart-f-theme: mat.define-theme(
+//   (
+//     color: (
+//       theme-type: light,
+//       primary: mat.$azure-palette,
+//       tertiary: mat.$blue-palette,
+//     ),
+//     density: (
+//       scale: 0,
+//     ),
+//   )
+// );
+$lemon-mart-f-theme: mat.m2-define-light-theme(
   (
     color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      primary: $lemon-mart-primary,
+      accent: $lemon-mart-accent,
     ),
-    density: (
-      scale: 0,
-    ),
+    density: 0,
   )
 );
 
