@@ -1,0 +1,13 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  &_menu {
+    display: flex;
+    align-items: center;
+  }
+  &_account {
+    display: flex;
+    align-items: center;
+  }
+}

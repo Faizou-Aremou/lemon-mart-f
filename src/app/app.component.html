@@ -1,6 +1,23 @@
-<mat-toolbar color="primary">
-  <a mat-button routerLink="/home">
-    <h1>LemonMart</h1>
-  </a>
+<mat-toolbar color="primary" >
+  <div class="toolbar">
+    <div class="toolbar_menu">
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-icon svgIcon="lemon"></mat-icon>
+      <a mat-button routerLink="/home">
+        <h1>LemonMart</h1>
+      </a>
+    </div>
+    <div  class="toolbar_account">
+    <span class="flex-spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>lock_open</mat-icon>
+    </button>
+    </div>
+  </div>
 </mat-toolbar>
 <router-outlet />
