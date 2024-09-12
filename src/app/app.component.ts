@@ -7,7 +7,14 @@ import { DomSanitizer } from '@angular/platform-browser'
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, MatToolbarModule, RouterOutlet, MatButtonModule, MatIconModule],
+  imports: [
+    RouterLink,
+    MatToolbarModule,
+    RouterOutlet,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
