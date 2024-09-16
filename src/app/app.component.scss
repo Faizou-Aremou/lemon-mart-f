@@ -11,9 +11,14 @@
   &_menu {
     display: flex;
     align-items: center;
+    gap: 8px;
   }
   &_account {
     display: flex;
     align-items: center;
+  }
+  .toolbar-account {
+    display: flex;
+    gap: 8px;
   }
 }

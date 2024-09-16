@@ -1,23 +1,22 @@
 <header class="header">
 <mat-toolbar color="primary" >
   <div class="toolbar">
-    <div class="toolbar_menu">
-      <button mat-icon-button>
+    <div class="toolbar_menu toolbar-menu">
+      <button class="toolbar-menu_menu-icon" mat-icon-button>
         <mat-icon>menu</mat-icon>
       </button>
-      <mat-icon svgIcon="lemon"></mat-icon>
-      <a mat-button routerLink="/home">
-        <h1>LemonMart</h1>
+      <a class="toolbar-menu_title title-btn" mat-icon-button routerLink="/home">
+        <mat-icon svgIcon="lemon"></mat-icon>
+        <span class="title-btn_label"> LemonMart </span>
       </a>
     </div>
-    <div  class="toolbar_account">
-    <span class="flex-spacer"></span>
-    <button mat-mini-fab routerLink="/user/profile" matTooltip="Profile" aria-label="User Profile">
+    <div  class="toolbar_account toolbar-account">
+    <a id="toolbar-account_profile-btn" class="toolbar-account_profile-btn" mat-mini-fab routerLink="/user/profile" matTooltip="Profile" aria-label="User Profile">
       <mat-icon>account_circle</mat-icon>
-    </button>
-    <button mat-mini-fab routerLink="/user/logout" matTooltip="Logout" aria-label="Logout">
+    </a>
+    <a id="toolbar-account_logout-btn" class="toolbar-account_logout-btn" mat-mini-fab routerLink="/user/logout" matTooltip="Logout" aria-label="Logout">
       <mat-icon>lock_open</mat-icon>
-    </button>
+    </a>
     </div>
   </div>
 </mat-toolbar>
