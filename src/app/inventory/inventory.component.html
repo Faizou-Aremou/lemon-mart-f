@@ -1,0 +1,21 @@
+<mat-toolbar class="inventory__toolbar" color="accent">
+  <a mat-button class="inventory__toolbar-element--stock-entry" routerLink="stock-entry" routerLinkActive="active-link" aria-label="Inventory">
+    Stock Entry
+  </a>
+  <a mat-button class="inventory__toolbar-element--products" routerLink="products" routerLinkActive="active-link"  aria-label="Inventory">
+    Products
+  </a>
+  <a mat-button class="inventory__toolbar-element--categories" routerLink="categories" routerLinkActive="active-link" aria-label="Inventory">
+Category
+  </a>
+  <a mat-button class="inventory__toolbar-element--monthly-inventory" routerLink="monthly-inventory" routerLinkActive="active-link" aria-label="Inventory">
+    Monthly Inventory
+  </a>
+  <a mat-button class="inventory__toolbar-element--inventory-status" routerLink="inventory-status" routerLinkActive="active-link" aria-label="Inventory">
+    Inventory Status
+  </a>
+  <a mat-button class="inventory__toolbar-element--product-mix" routerLink="product-mix" routerLinkActive="active-link" aria-label="Inventory">
+    Product Mix
+  </a>
+</mat-toolbar>
+<router-outlet></router-outlet>
