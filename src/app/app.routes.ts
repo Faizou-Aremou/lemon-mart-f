@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,5 +21,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./inventory/inventory.module').then((m) => m.InventoryModule),
   },
-  { path: '**', component: PageNotFoundComponent },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      ),
+  },
 ]
