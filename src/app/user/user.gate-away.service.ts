@@ -1,4 +1,4 @@
-import { PhoneType, User, UserRole } from './user.service'
+import { PhoneType, User, UserRole } from '../auth/auth.service'
 
 export interface UserDTO {
   id: string
@@ -55,7 +55,6 @@ function buildUser(user: UserDTO): User {
     level,
     address,
     phones,
-    receipt: [],
   }
 }
 
