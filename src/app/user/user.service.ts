@@ -1,11 +1,18 @@
-import { Injectable } from '@angular/core'
+import { Injectable, computed, signal } from '@angular/core'
 import { Receipt } from '../receipt/receipt'
+import { Observable } from 'rxjs'
 
 //Entities
-export interface CreatedUser {
+
+export enum UserRole {
+  None = 'none',
+  Clerk = 'clerk',
+  Cashier = 'cashier',
+  Manager = 'manager',
+}
+export interface User {
   id: string
   email: string
-  password: string
   dateOfBirth: Date | undefined
   name: Name
   picture: string
@@ -13,21 +20,25 @@ export interface CreatedUser {
   userStatus: boolean
   receipt: Receipt[]
   level: number
-  address: Address
+  address: Address | null
   phones: Phone[]
 }
-export interface SavedUser {
-  id: string
-  email: string
-  dateOfBirth: Date | undefined
-  name: Name
-  picture: string
-  role: UserRole
-  userStatus: boolean
-  receipt: Receipt[]
-  level: number
-  address: Address
-  phones: Phone[]
+export const DEFAULT_USER: User = {
+  id: '',
+  email: '',
+  dateOfBirth: new Date(),
+  name: {
+    first: '',
+    middle: '',
+    last: '',
+  },
+  picture: '',
+  role: UserRole.None,
+  userStatus: false,
+  receipt: [],
+  level: 0,
+  address: null,
+  phones: [],
 }
 
 // value objects
@@ -36,12 +47,7 @@ export interface Name {
   middle: string
   last: string
 }
-export enum UserRole {
-  None = 'none',
-  Clerk = 'clerk',
-  Cashier = 'cashier',
-  Manager = 'manager',
-}
+
 export interface Address {
   line1: string
   line2?: string
@@ -64,5 +70,15 @@ export interface Phone {
   providedIn: 'root',
 })
 export class UserService {
+  user = signal<User | null>(null)
+  fullName = computed(() => {
+    if (!this.user()?.name) {
+      return ''
+    } else if (this.user()?.name.middle) {
+      return `${this.user()?.name.first} ${this.user()?.name.middle} ${this.user()?.name.last}`
+    }
+    return `${this.user()?.name.first} ${this.user()?.name.last}`
+  })
+
   constructor() {}
 }

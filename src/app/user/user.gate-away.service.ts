@@ -1,4 +1,4 @@
-import { PhoneType, SavedUser, UserRole } from './user.service'
+import { PhoneType, User, UserRole } from './user.service'
 
 export interface UserDTO {
   id: string
@@ -32,16 +32,16 @@ export interface UserDTO {
   }
 }
 
-function buildUser(user: UserDTO): SavedUser {
-  const id = user.id
-  const name = user.name
-  const email = user.email
-  const picture = user.picture
-  const role = user.role as UserRole
+function buildUser(user: UserDTO): User {
+  const id = user.id ?? null
+  const name = user.name ?? null
+  const email = user.email ?? null
+  const picture = user.picture ?? null
+  const role = (user.role as UserRole) ?? UserRole.None
   const dateOfBirth = user.dateOfBirth ? new Date(user.dateOfBirth) : undefined
-  const userStatus = user.userStatus
-  const level = user.level
-  const address = user.address
+  const userStatus = user.userStatus ?? false
+  const level = user.level ?? 0
+  const address = user.address ?? null
   const phones = user.phones.map((phone) => ({ ...phone, type: phone.type as PhoneType }))
 
   return {
@@ -57,4 +57,11 @@ function buildUser(user: UserDTO): SavedUser {
     phones,
     receipt: [],
   }
+}
+
+function toCreatedUserDTO(user: User): Omit<UserDTO, 'id'> {
+  throw new Error()
+}
+function toSavedUserDTO(user: User): UserDTO {
+  throw new Error()
 }
