@@ -1,5 +1,16 @@
-import { Injectable, WritableSignal, signal } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Injectable } from '@angular/core'
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  filter,
+  map,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs'
+import { JwtPayload, jwtDecode } from 'jwt-decode'
+import { transformError } from '../common/error.handling'
 
 export interface AuthStatus {
   isAuthenticated: boolean
@@ -23,9 +34,9 @@ export const DEFAULT_AUTH_STATUS: AuthStatus = {
   userId: null,
 }
 export interface IAuthService {
-  readonly authStatus: WritableSignal<AuthStatus>
-  readonly currentUser: WritableSignal<User>
-  login(email: string, password: string): Observable<void>
+  readonly authStatus$: Observable<AuthStatus>
+  readonly currentUser$: Observable<User>
+  login(email: string, password: string): void
   logout(clearToken?: boolean): void
   getToken(): string
 }
@@ -88,16 +99,38 @@ export interface Phone {
   providedIn: 'root',
 })
 export abstract class AuthService implements IAuthService {
-  authStatus = signal<AuthStatus>(DEFAULT_AUTH_STATUS)
-  currentUser = signal<User>(DEFAULT_USER)
+  readonly authStatus = new BehaviorSubject<AuthStatus>(DEFAULT_AUTH_STATUS)
+  readonly currentUser = new BehaviorSubject<User>(DEFAULT_USER)
+  readonly authStatus$ = this.authStatus.asObservable()
+  readonly currentUser$ = this.currentUser.asObservable()
   constructor() {}
-  login(email: string, password: string): Observable<void> {
-    throw new Error('Method not implemented.')
+  login(email: string, password: string): void {
+    this.authProvider(email, password).pipe(
+      map((value) => {
+        const token = jwtDecode(value.accessToken)
+        return this.transformJwtToken(token)
+      }),
+      tap((status) => this.authStatus.next(status)),
+      filter((status: AuthStatus) => status.isAuthenticated), // create two type here;
+      switchMap(() => this.getCurrentUser()),
+      tap((user) => this.currentUser.next(user)),
+      catchError((err) => {
+        this.logout()
+        return throwError(() => transformError(err))
+      })
+    )
   }
+
   logout(clearToken?: boolean | undefined): void {
     throw new Error('Method not implemented.')
   }
   getToken(): string {
     throw new Error('Method not implemented.')
   }
+  protected abstract authProvider(
+    email: string,
+    password: string
+  ): Observable<IServerAuthResponse>
+  protected abstract transformJwtToken(token: JwtPayload): AuthStatus
+  protected abstract getCurrentUser(): Observable<User>
 }
